@@ -1,0 +1,61 @@
+@model Hikari_Biblioteca.Models.Autor
+@{
+    ViewData["Title"] = "Perfil do Autor";
+}
+
+
+<div style="margin-top: 30px;">
+    
+    <a href="/" style="text-decoration: none; color: #555; font-size: 16px;">
+        &larr; Voltar para a página inicial
+    </a>
+
+    <div style="display: flex; gap: 30px; margin-top: 20px; align-items: center; background-color: #f4f4f4; padding: 20px; border-radius: 8px;">
+        
+        <img src="@Model.FotografiaUrl" alt="Foto de @Model.Nome" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+        
+        <div>
+            <h1 style="margin: 0; color: #333;">@Model.Nome</h1>
+            <p style="color: #666; font-size: 18px;">Nascimento: <strong>@Model.DataNascimento.ToString("dd/MM/yyyy")</strong></p>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h2>Biografia</h2>
+        <p style="font-size: 18px; line-height: 1.6;">@Model.Biografia</p>
+
+        @if (!string.IsNullOrEmpty(Model.Curiosidades))
+        {
+            <div style="background-color: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin-top: 20px;">
+                <h4 style="margin-top: 0; color: #856404;">Você Sabia?</h4>
+                <p style="margin-bottom: 0; color: #856404;">@Model.Curiosidades</p>
+            </div>
+        }
+    </div>
+
+    <hr style="margin: 40px 0;" />
+
+    <div>
+        <h2>Obras na biblioteca</h2>
+        
+        @if (Model.LivrosRelacionados.Any())
+        {
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                @foreach (var livro in Model.LivrosRelacionados)
+                {
+                    <div style="text-align: center; width: 120px;">
+                        <img src="@livro.CapaUrl" alt="Capa de @livro.Titulo" style="width: 100px; height: 150px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />
+                        <p style="font-size: 14px; margin-top: 10px; font-weight: bold;">
+                            <a href="/Livro/Detalhes/@livro.Id" style="text-decoration: none; color: #f0630a;">@livro.Titulo</a>
+                        </p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p style="color: #777; font-style: italic;">Nenhuma obra deste autor no acervo no momento.</p>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,43 @@
+@model Hikari_Biblioteca.Models.Livro
+@{
+    ViewData["Title"] = "Detalhes do Livro";
+}
+
+<div style="margin-top: 30px;">
+    
+    <a href="/" style="text-decoration: none; color: #555; font-size: 16px;">
+        &larr; Voltar para a página inicial
+    </a>
+
+    <div style="display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+        
+        <div style="flex: 1; min-width: 300px; max-width: 400px;">
+            <img src="@Model.CapaUrl" alt="Capa de @Model.Titulo" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+        </div>
+
+        <div style="flex: 2; min-width: 300px;">
+            
+            <h1 style="color: #333; margin-bottom: 5px;">@Model.Titulo</h1>
+            
+            <p style="color: #777; font-size: 18px; margin-top: 0;">Publicado em: <strong>@Model.AnoPublicacao</strong></p>
+            
+            <hr style="margin: 20px 0;" />
+            
+            <h3>Sinopse</h3>
+            <p style="font-size: 18px; line-height: 1.6;">@Model.Sinopse</p>
+            
+            <div style="margin-top: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="margin-top: 0;">Sobre o Autor</h4>
+                
+                <p style="font-size: 18px; margin-bottom: 15px;">
+                    Escrito por: <strong>@Model.AutorDoLivro.Nome</strong>
+                </p>
+                
+                <a href="/Autor/Detalhes/@Model.AutorId" style="background-color: #f0630a; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block;">
+                    Ver Perfil Completo do Autor
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

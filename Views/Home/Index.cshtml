@@ -1,0 +1,200 @@
+﻿@model IEnumerable<Hikari_Biblioteca.Models.Livro>
+@{
+    ViewData["Title"] = "Página Inicial";
+    var autor = ViewBag.AutorDestaque as Hikari_Biblioteca.Models.Autor;
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #df5a39 0%, #c14f33 100%);
+        color: white;
+        padding: 50px 30px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 20px rgba(255, 73, 28, 0.2);
+    }
+
+    .hero-section h1 { font-weight: 600; margin-bottom: 15px; }
+    .hero-section p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+
+    .carrossel-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-navegacao {
+        background-color: #ff491c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        z-index: 10;
+        transition: transform 0.2s, background-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-navegacao:hover { background-color: #d83d15; transform: scale(1.1); }
+    .btn-prev { left: -20px; }
+    .btn-next { right: -20px; }
+
+    .carrossel-livros {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 20px 10px;
+        scroll-behavior: smooth;
+        width: 100%;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .carrossel-livros::-webkit-scrollbar { display: none; }
+
+    .card-livro {
+        border: none;
+        padding: 15px;
+        flex: 0 0 260px; /*pros meus manos naos se espremerem, aparentemente */
+        max-width: 260px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-livro:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(255, 73, 28, 0.15);
+    }
+
+    .card-livro h3 { 
+        font-size: 1.1rem; 
+        margin: 15px 0 10px 0; 
+        color: #333; 
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    .card-livro p {
+        height: 60px; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        color: #666; 
+        font-size: 0.9rem;
+        margin-bottom: auto; 
+    }
+
+    .btn-detalhes {
+        background-color: transparent; 
+        color: #ff491c; 
+        border: 2px solid #ff491c;
+        padding: 10px; 
+        text-decoration: none; 
+        border-radius: 8px; 
+        display: block;
+        text-align: center;
+        font-weight: 600;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-detalhes:hover { background-color: #ff491c; color: white; }
+
+    .painel-autor {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        margin-top: 20px;
+        border-left: 5px solid #ff491c;
+    }
+</style>
+
+<div class="hero-section">
+    <h1>Bem-vindo à Hikari Biblioteca</h1>
+    <p>
+        Navegue pelo meu acervo real, descubra novas histórias e mergulhe em mundos fascinantes.
+        Aqui você encontra os melhores livros de mistério, ficção científica e muito mais!
+    </p>
+</div>
+
+<h2 style="color: #333; font-weight: 600; margin-bottom: 15px;">Livros em Destaque</h2>
+
+<div class="carrossel-wrapper">
+    <button class="btn-navegacao btn-prev">&#10094;</button>
+
+    <div class="carrossel-livros">
+        @foreach (var livro in Model)
+        {
+            <div class="card-livro">
+                <img src="@(livro.CapaUrl)" alt="Capa de @(livro.Titulo)"
+                     style="width: 100%; height: 350px; object-fit: cover; border-radius: 8px;" />
+
+                <h3>@(livro.Titulo)</h3>
+                <p>@(livro.Sinopse)</p>
+
+                <a href="/Livro/Detalhes/@(livro.Id)" class="btn-detalhes">Ver Detalhes</a>
+            </div>
+        }
+    </div>
+
+    <button class="btn-navegacao btn-next">&#10095;</button>
+</div>
+
+<hr style="margin-top: 40px; margin-bottom: 30px; border-color: #eaeaea;" />
+
+<h2 style="color: #ff491c; font-weight: 600;">Autor em Destaque do Mês</h2>
+
+<div class="painel-autor">
+    <img src="@autor.FotografiaUrl" alt="Foto de @(autor.Nome)"
+         style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1);" />
+
+    <div>
+        <h3 style="margin-top: 0; font-size: 1.5rem;">@autor.Nome</h3>
+        <p style="color: #555; line-height: 1.6;"><strong>Quem é:</strong> @autor.Biografia</p>
+        <p style="color: #555; line-height: 1.6;"><strong>Curiosidade:</strong> <em>@autor.Curiosidades</em></p>
+        <a href="/Autor/Detalhes/@autor.Id"
+           style="font-weight: 600; color: #ff491c; text-decoration: none; display: inline-block; margin-top: 10px;">Ler
+            Perfil Completo &rarr;</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carrossel = document.querySelector('.carrossel-livros');
+            const btnEsquerda = document.querySelector('.btn-prev');
+            const btnDireita = document.querySelector('.btn-next');
+
+            if (btnEsquerda && btnDireita && carrossel) {
+                btnEsquerda.addEventListener('click', function() {
+                    carrossel.scrollBy({ left: -320, behavior: 'smooth' });
+                });
+
+                btnDireita.addEventListener('click', function() {
+                    carrossel.scrollBy({ left: 320, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+}

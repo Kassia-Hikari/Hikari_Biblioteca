@@ -1,0 +1,38 @@
+@model IEnumerable<Hikari_Biblioteca.Models.Livro>
+@{
+    ViewData["Title"] = "Meu Acervo Pessoal";
+}
+
+<div style="margin-top: 30px;">
+    <h1>Acervo da Biblioteca</h1>
+    <p>Explore todos os títulos disponíveis.</p>
+
+    <form method="get" action="/Livro/Index" style="margin-bottom: 30px; display: flex; gap: 10px;">
+        <input type="text" name="pesquisa" placeholder="Buscar livro por título..." 
+               style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;" />
+        
+        <button type="submit" style="padding: 10px 20px; background-color: #f0630a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Pesquisar
+        </button>
+        <a href="/Livro" style="padding: 10px; color: #555; text-decoration: none;">Limpar</a>
+    </form>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        @if (!Model.Any())
+        {
+            <p>Hmm desculpa, acho que ainda nao tenho esse livro :/</p>
+        }
+        else
+        {
+            @foreach (var livro in Model)
+            {
+                <div style="border: 1px solid #ddd; padding: 15px; width: 200px; text-align: center; border-radius: 8px;">
+                    <img src="@(livro.CapaUrl)" style="width: 100%; height: 280px; object-fit: cover; border-radius: 4px;" />
+                    <h4 style="margin: 10px 0;">@(livro.Titulo)</h4>
+                    <p style="color: #777; font-size: 14px;">@(livro.AutorDoLivro?.Nome)</p>
+                    <a href="/Livro/Detalhes/@(livro.Id)" style="color: #f0630a; text-decoration: none; font-weight: bold;">Ver Detalhes</a>
+                </div>
+            }
+        }
+    </div>
+</div>
