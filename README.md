@@ -15,4 +15,4 @@ Certifique-se de ter o [.NET SDK](https://dotnet.microsoft.com/download) instala
 
 1. Clone este repositório:
    ```bash
-   git clone [https://seu-link-do-github-aqui.git](https://seu-link-do-github-aqui.git)
+   git clone [https://github.com/Kassia-Hikari/Hikari_Biblioteca.git](https://github.com/Kassia-Hikari/Hikari_Biblioteca.git)
